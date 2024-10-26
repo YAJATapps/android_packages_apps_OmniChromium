@@ -64,10 +64,12 @@ LOCAL_REQUIRED_MODULES := \
         libwebviewchromium_loader \
         libwebviewchromium_plat_support
 
-LOCAL_MODULE_TARGET_ARCH := arm
-my_src_arch := $(call get-prebuilt-src-arch,$(LOCAL_MODULE_TARGET_ARCH))
-LOCAL_SRC_FILES := prebuilt/$(my_src_arch)/SystemWebView.apk
-LOCAL_OPTIONAL_USES_LIBRARIES := androidx.window.extensions
+ifeq ($(TARGET_ARCH),arm64)
+    LOCAL_SRC_FILES := prebuilt/arm64/SystemWebView.apk
+else
+    LOCAL_SRC_FILES := prebuilt/arm/SystemWebView.apk
+    LOCAL_OPTIONAL_USES_LIBRARIES := androidx.window.extensions
+endif
 
 LOCAL_PREBUILT_JNI_LIBS_arm := @lib/armeabi-v7a/libwebviewchromium.so
 LOCAL_PREBUILT_JNI_LIBS_arm64 := @lib/arm64-v8a/libwebviewchromium.so
